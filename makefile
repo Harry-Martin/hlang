@@ -1,8 +1,11 @@
 
-.PHONY = all
+.PHONY = all clean
 
 all: hi
 	
 hi: hlang.c
-	gcc $< -o $@
+	gcc $< -o $@ -g
+
+clean:
+	rm hi
 
