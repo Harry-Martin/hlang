@@ -7,13 +7,21 @@
 
 static char *src_from_file(const char *filepath)
 {
+    char *src;
     FILE *f = fopen(filepath, "r");
-    fseek(f, 0, SEEK_END);
-    size_t size = ftell(f);
-    rewind(f);
-    char *src = calloc(1, (size + 1) * sizeof(char));
-    fread(src, sizeof(char), size, f);
-
+    if (f)
+    {
+        fseek(f, 0, SEEK_END);
+        size_t size = ftell(f);
+        rewind(f);
+        src = calloc(1, (size + 1) * sizeof(char));
+        fread(src, sizeof(char), size, f);
+    }
+    else
+    {
+        fprintf(stderr, "ERROR: failed to open file: %s\n", filepath);
+        exit(1);
+    }
     return src;
 }
 
@@ -165,16 +173,16 @@ Token *lexer_next_token(Lexer *lexer)
         {
             if (is_keyword(lexer))
             {
-                t = token(TOK_KEYWORD, ""); //parse_keyword(lexer)); TODO: implement
+                t = token(TOK_KEYWORD, ""); // parse_keyword(lexer)); TODO: implement
             }
             else
             {
-                t = token(TOK_IDENT, ""); //parse_ident(lexer)); TODO: implement
+                t = token(TOK_IDENT, ""); // parse_ident(lexer)); TODO: implement
             }
         }
         else if (isdigit(c))
         {
-            t = token(TOK_NUMBER, ""); //parse_number(lexer)); TODO: implement
+            t = token(TOK_NUMBER, ""); // parse_number(lexer)); TODO: implement
         }
         advance_lexer(lexer);
     }
