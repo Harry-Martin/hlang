@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "lexer.h"
 void display_usage()
 {
     printf("Usage: hi <path>\n");
@@ -64,15 +65,28 @@ int main(int argc, char **argv)
 {
     if (argc == 2)
     {
-        const char *src = get_source(argv[1]);
 
-        char *word;
-        char *rest = (char *)src;
-        do{
-        rest = substr_by_delim(rest, &word, " ");
-        printf("%s\n", word);
-        } while (*word != '\0' && *rest != '\0');
-        return 0;
+        Lexer *lexer = lexer_from_file(argv[1]);
+        Token *t;
+        while ((t = lexer_next_token(lexer)))
+        {
+            print_token(t);
+            if(t->type == TOK_EOF){
+                break;
+            }
+        }
+
+        /*const char *src = get_source(argv[1]);*/
+
+        /*char *word;*/
+        /*char *rest = (char *)src;*/
+        /*do*/
+        /*{*/
+        /*rest = substr_by_delim(rest, &word, " ");*/
+        /*printf("%s\n", word);*/
+
+        /*} while (*word != '\0' && *rest != '\0');*/
+        /*return 0;*/
     }
     else
     {
