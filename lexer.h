@@ -12,6 +12,7 @@ typedef enum
     TOK_KEYWORD,
     TOK_NUMBER,
     TOK_IDENT,
+    TOK_EQUAL,
 } TOKEN_TYPE;
 
 typedef struct
@@ -25,6 +26,8 @@ typedef struct
     const char *src;
     size_t src_size;
     size_t src_index;
+    size_t line_no;
+    size_t c_no;
 } Lexer;
 
 Lexer *lexer(const char *src, size_t src_size);
