@@ -38,7 +38,7 @@ static void advance_lexer(Lexer *lexer)
         if(c == '\n')
         {
             lexer->line_no += 1;
-            lexer->c_no = 1;
+            lexer->c_no = 0;
         }
         lexer->src_index += 1;
         lexer->c_no += 1;
@@ -226,7 +226,7 @@ Token *lexer_next_token(Lexer *lexer)
 
     if (t->type == TOK_UNKNOWN)
     {
-        fprintf(stderr, "ERROR: unexpected character %c at (%ld:%ld)\n", c, lexer->line_no, lexer->c_no);
+        fprintf(stderr, "ERROR: unexpected character \"%c\" at (%ld:%ld)\n", c, lexer->line_no, lexer->c_no);
         exit(1);
     }
     
