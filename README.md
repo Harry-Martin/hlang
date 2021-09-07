@@ -24,3 +24,18 @@ $ ./hi helloWorld.hl
 $
 ```
 
+Example of catching a lexical error:
+```console
+> cat broken.hl
+message = "hello, world!";
+print %&*£^"" <- these chacters do not match any token;
+>
+> ./hi broken.hl
+<TOK_IDENT, "message">
+<=>
+<TOK_STR_LIT, "hello, world!">
+<;>
+<TOK_KEYWORD, "print">
+ERROR: unexpected character "%" at (2:7)
+```
+
