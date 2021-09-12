@@ -9,19 +9,20 @@ For now I will be using the GNU Assembler to generate machine code. Who knows, I
 
 Example of the lexer so far:
 ```console
-$ cat helloWorld.hl
+> cat helloWorld.hl
 message = "hello, world!";
 print message;
-$
-$ ./hi helloWorld.hl
-<TOK_IDENT, "message">
-<=>
-<TOK_STR_LIT, "hello, world!">
-<;>
-<TOK_KEYWORD, "print">
-<TOK_IDENT, "message">
+>
+> ./hi helloWorld.hl
+<TOK_IDENT, message>
+<TOK_EQUALS>
+<TOK_STRING, "hello, world!">
+<TOK_SEMI>
+<TOK_KEYWORD, print>
+<TOK_IDENT, message>
+<TOK_SEMI>
 <TOK_EOF>
-$
+>
 ```
 
 Example of catching a lexical error:
@@ -30,12 +31,12 @@ Example of catching a lexical error:
 message = "hello, world!";
 print %&*£^"" <- these chacters do not match any token;
 >
-> ./hi broken.hl
-<TOK_IDENT, "message">
-<=>
-<TOK_STR_LIT, "hello, world!">
-<;>
-<TOK_KEYWORD, "print">
-ERROR: unexpected character "%" at (2:7)
+> ./hi broken.hl                                                                                    ~/dev/hlang(master✗)@harry
+<TOK_IDENT, message>
+<TOK_EQUALS>
+<TOK_STRING, "hello, world!">
+<TOK_SEMI>
+<TOK_KEYWORD, print>
+Unexpected symbol "%" at (2:7)
 ```
 
